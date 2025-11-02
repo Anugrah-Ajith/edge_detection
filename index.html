@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canny Edge Detection - Web App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎨 Canny Edge Detection</h1>
+            <p class="subtitle">Upload an image to detect edges using the Canny algorithm</p>
+        </header>
+
+        <div class="main-content">
+            <div class="upload-section">
+                <div class="upload-box" id="uploadBox">
+                    <div class="upload-icon">📁</div>
+                    <h3>Drag & Drop Image Here</h3>
+                    <p>or</p>
+                    <label for="fileInput" class="btn-primary">Choose File</label>
+                    <input type="file" id="fileInput" accept="image/*" hidden>
+                    <p class="file-info">Supported: PNG, JPG, JPEG, GIF, BMP, WEBP (Max: 16MB)</p>
+                </div>
+
+                <div class="controls" id="controls" style="display: none;">
+                    <h3>Parameters</h3>
+                    
+                    <div class="control-group">
+                        <label>
+                            <input type="checkbox" id="adaptiveCheck" checked>
+                            Use Adaptive Thresholds (Recommended)
+                        </label>
+                    </div>
+
+                    <div class="manual-controls" id="manualControls" style="display: none;">
+                        <div class="control-row">
+                            <label for="lowerThreshold">Lower Threshold:</label>
+                            <input type="range" id="lowerThreshold" min="0" max="255" value="100">
+                            <span id="lowerValue">100</span>
+                        </div>
+                        <div class="control-row">
+                            <label for="upperThreshold">Upper Threshold:</label>
+                            <input type="range" id="upperThreshold" min="0" max="255" value="200">
+                            <span id="upperValue">200</span>
+                        </div>
+                    </div>
+
+                    <div class="control-row">
+                        <label for="blurKernel">Blur Kernel Size:</label>
+                        <input type="range" id="blurKernel" min="3" max="15" step="2" value="5">
+                        <span id="blurValue">5</span>
+                    </div>
+
+                    <button class="btn-primary" id="processBtn">Process Image</button>
+                </div>
+            </div>
+
+            <div class="results-section" id="resultsSection" style="display: none;">
+                <div class="result-card">
+                    <h3>Original Image</h3>
+                    <div class="image-container">
+                        <img id="originalImg" alt="Original">
+                        <p id="imageSize" class="image-info"></p>
+                    </div>
+                </div>
+
+                <div class="result-card">
+                    <h3>Grayscale</h3>
+                    <div class="image-container">
+                        <img id="grayscaleImg" alt="Grayscale">
+                    </div>
+                </div>
+
+                <div class="result-card">
+                    <h3>Blurred</h3>
+                    <div class="image-container">
+                        <img id="blurredImg" alt="Blurred">
+                    </div>
+                </div>
+
+                <div class="result-card">
+                    <h3>Edge Detected</h3>
+                    <div class="image-container">
+                        <img id="edgesImg" alt="Edges">
+                        <p id="thresholdInfo" class="image-info"></p>
+                    </div>
+                    <button class="btn-download" id="downloadBtn">Download Result</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="loading" id="loading" style="display: none;">
+            <div class="spinner"></div>
+            <p>Processing image...</p>
+        </div>
+
+        <div class="error" id="error" style="display: none;">
+            <p id="errorMessage"></p>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
+
